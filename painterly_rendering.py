@@ -22,6 +22,17 @@ from tqdm.auto import tqdm, trange
 
 import config
 import sketch_utils as utils
+
+# put this right after standard imports, before importing models.loss
+import torch.nn.functional as F
+
+# back-compat for older CLIP_/auxilary.py expecting private F._* symbols
+if not hasattr(F, "_pad"):
+    F._pad = F.pad
+if not hasattr(F, "_interpolate"):
+    F._interpolate = F.interpolate
+# (add more as needed if errors mention other F._something)
+
 from models.loss import Loss
 from models.painter_params import Painter, PainterOptimizer
 from IPython.display import display, SVG

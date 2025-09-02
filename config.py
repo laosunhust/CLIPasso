@@ -3,8 +3,16 @@ import os
 import random
 
 import numpy as np
-import pydiffvg
 import torch
+
+if os.name == "nt":
+    torch_lib = os.path.join(os.path.dirname(torch.__file__), "lib")
+    cuda_bin  = os.path.join(os.environ.get("CUDA_PATH", r"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.4"), "bin")
+    if os.path.isdir(torch_lib): os.add_dll_directory(torch_lib)
+    if os.path.isdir(cuda_bin):  os.add_dll_directory(cuda_bin)
+
+import pydiffvg
+
 import wandb
 
 
